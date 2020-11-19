@@ -21,6 +21,7 @@ import Profile from './components/profile/Profile';
 import Post from './components/post/Post';
 import NotFound from './components/not-found/NotFound';
 
+
 import { routes } from './routes';
 
 import './App.css';
