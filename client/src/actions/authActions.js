@@ -11,8 +11,7 @@ export const registerUser = (userData, history) => dispatch => {
       type: GET_ERRORS,
       payload: err.response.data
     }))
-}
-
+};
 
 // Login
 export const loginUser = userData => dispatch => {
@@ -39,9 +38,19 @@ export const loginUser = userData => dispatch => {
 
 // Set logged in user
 export const setCurrentUser = (decoded) => {
-  console.log('decoded', decoded);
+  // console.log('decoded', decoded);
   return {
     type: SET_CURRENT_USER,
     payload: decoded
   }
-}
+};
+
+// Log User out
+export const logoutUser = () => dispatch =>{
+  //Remove token from localStorage
+  localStorage.removeItem('jwtToken');
+  // Remove auth header for future requests
+  setAuthToken(false);
+
+  dispatch(setCurrentUser({}));
+};

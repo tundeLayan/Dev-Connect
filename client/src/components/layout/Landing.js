@@ -1,6 +1,15 @@
-import React from 'react'
+import React from 'react';
+import { routes } from '../../routes';
+import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 export default function Landing() {
+  const auth  = useSelector(state => state.auth);
+
+  if(auth.isAuthenticated){
+    window.location.href = '/dashboard';
+  }
+  
   return (
     <>
       <div className="landing">
@@ -12,8 +21,8 @@ export default function Landing() {
                 </h1>
                 <p className="lead"> Create a developer profile/portfolio, share posts and get help from other developers</p>
                 <hr />
-                <a href="register.html" className="btn btn-lg btn-info mr-2">Sign Up</a>
-                <a href="login.html" className="btn btn-lg btn-light">Login</a>
+                <a href={routes.register.path} className="btn btn-lg btn-info mr-2">Sign Up</a>
+                <a href={routes.login.path} className="btn btn-lg btn-light">Login</a>
               </div>
             </div>
           </div>
