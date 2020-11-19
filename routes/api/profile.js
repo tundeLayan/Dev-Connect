@@ -82,27 +82,30 @@ router.get('/handle/:handle', (req, res)=>{
 // @route   GET api/profile/user/:user_od
 // @desc    Get profile by user ID
 // @access  Public 
-router.get('/user/:user_id', (req, res)=>{
-    const errors = {}; 
-    Profile.findOne({user: req.params.user_id})
-    .populate('user', ['name', 'avatar'])
-    .then(profile => {
-        if(!profile){
-            errors.noprofile = 'There is no profile for this user';
-            res.status(404).json(errors);
-            console.log(errors.noprofile);
+router.get('/user/:user_id', (req, res) => {
+    const errors = {};
+  
+    Profile.findOne({ user: req.params.user_id })
+      .populate('user', ['name', 'avatar'])
+      .then(profile => {
+        if (!profile) {
+          errors.noprofile = 'There is no profile for this user';
+          res.status(404).json(errors);
         }
+  
         res.json(profile);
-    })
-    .catch( err => res.status(404).json({ profile: 'There is no profile from this user' }))
-});
+      })
+      .catch(err =>
+        res.status(404).json({ profile: 'There is no profile for this user' })
+      );
+  });
 
 // @route   POST api/profile/
 // @desc    Create or edit User Profile
 // @access  Private 
 router.post('/', passport.authenticate('jwt', {session: false}), (req,res)=> {
     const {isValid, errors} = validateProfileInput(req.body);
-    console.log(isValid)
+    // console.log(isValid)
     // Check validation
     if(!isValid){
         // Return any errors with 400 status
@@ -173,9 +176,9 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req,res)=> {
 // @desc    Add Experience to the profile
 // @access  Private 
 router.post('/experience',passport.authenticate('jwt',{session: false }) ,(req,res)=>{
-    console.log(req.body);
+    // console.log(req.body);
     const {isValid, errors} = validateExperienceInput(req.body);
-    console.log(isValid)
+    // console.log(isValid)
     // Check validation
     if(!isValid){
         // Return any errors with 400 status
@@ -205,7 +208,7 @@ router.post('/experience',passport.authenticate('jwt',{session: false }) ,(req,r
 // @access  Private 
 router.post('/education',passport.authenticate('jwt',{session: false }) ,(req,res)=>{
     const {isValid, errors} = validateEducationInput(req.body);
-    console.log(isValid)
+    // console.log(isValid)
     // Check validation
     if(!isValid){
         // Return any errors with 400 status
